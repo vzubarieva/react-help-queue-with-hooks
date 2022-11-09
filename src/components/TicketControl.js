@@ -3,7 +3,9 @@ import NewTicketForm from "./NewTicketForm";
 import TicketList from "./TicketList";
 import EditTicketForm from "./EditTicketForm";
 import TicketDetail from "./TicketDetail";
-import React, { useState } from "react";
+import { useState } from "react";
+import db from "./../firebase.js";
+import { collection, addDoc } from "firebase/firestore";
 
 function TicketControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
@@ -61,10 +63,15 @@ function TicketControl() {
     setSelectedTicket(null);
   };
 
-  const handleAddingNewTicketToList = (newTicket) => {
-    const newMainTicketList = mainTicketList.concat(newTicket);
-    setMainTicketList(newMainTicketList);
+  const handleAddingNewTicketToList = async (newTicketData) => {
+    console.log(db);
+    const collectionRef = collection(db, "tickets");
+    const res = await addDoc(collectionRef, newTicketData);
+    console.log("fb res", res);
     setFormVisibleOnPage(false);
+    // const newMainTicketList = mainTicketList.concat(newTicket);
+    // setMainTicketList(newMainTicketList);
+    // setFormVisibleOnPage(false);
   };
 
   const handleChangingSelectedTicket = (id) => {
