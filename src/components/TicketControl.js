@@ -4,7 +4,7 @@ import TicketList from "./TicketList";
 import EditTicketForm from "./EditTicketForm";
 import TicketDetail from "./TicketDetail";
 import { useState } from "react";
-import db from "./../firebase.js";
+import { db, auth } from "./../firebase.js";
 import {
   collection,
   addDoc,
